@@ -1,0 +1,43 @@
+version: '3'
+
+services:
+
+  api:
+    build: 
+      context: ${BACK_PROJECT_NAME}
+      dockerfile: Dockerfile
+    environment:
+      - NODE_ENV=${ENV}
+    ports:
+      - ${BACK_PORT}:3000
+    volumes:
+      - ./${BACK_PROJECT_NAME}:/usr/src/app
+
+  app:
+    build: 
+      context: ${FRONT_PROJECT_NAME}
+      dockerfile: Dockerfile
+    environment:
+      - NODE_ENV=${ENV}
+      - REACT_APP_BACK_PORT=${BACK_PORT}
+    ports:
+      - ${FRONT_PORT}:3000
+    volumes:
+      - ./${FRONT_PROJECT_NAME}:/usr/src/app
+      - /home/app/app/node_modules
+
+  db:
+    image: postgres:12.1
+    environment:
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+    ports:
+      - 5432:5432
+
+  start_dependencies:
+    image: dadarek/wait-for-dependencies
+    depends_on:
+      - db 
+    command: db:5432
+
