@@ -2,7 +2,7 @@ include .env
 
 .PHONY: up down stop prune ps shell-api shell-app clone
 
-default: clone up
+default: clone up prepare
 
 up:
 	@echo "Starting up containers for for $(PROJECT_NAME)..."
@@ -44,6 +44,9 @@ rm:
 
 build:
 	docker-compose -p $(PROJECT_NAME) build --parallel app api
+
+prepare:
+	docker-compose -p $(PROJECT_NAME) run api npm run db:prepare
 
 deploy: pull stop rm build up
 
