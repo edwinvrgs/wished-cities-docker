@@ -6,7 +6,7 @@
 
 ### Try it!
 In your local:
-- Install `docker`.
+- Install `docker` and `docker-compose`.
 - Clone the project.
 - Create a .env file for the database environment (you can use the `.env.example` as a reference).
 - `make`. Build everything.
