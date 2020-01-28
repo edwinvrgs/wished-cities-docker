@@ -5,7 +5,7 @@ include .env
 default: clone up prepare
 
 up:
-	@echo "Starting up containers for for $(PROJECT_NAME)..."
+	@echo "Starting up containers for $(PROJECT_NAME)..."
 	docker-compose pull
 	docker-compose -p $(PROJECT_NAME) run --rm start_dependencies
 	docker-compose -p $(PROJECT_NAME) up -d --remove-orphans
